@@ -1,7 +1,10 @@
 import { Worker } from 'bullmq';
-import axios from 'axios'
+import ccxt from 'ccxt';
+import axios from 'axios';
 
 console.log('running...')
+
+console.log(ccxt.exchanges)
 const worker = new Worker('tasks', async job => {
   var res: any;
   res = await axios.get(job.data.url)
