@@ -2,9 +2,21 @@ import { Worker } from 'bullmq';
 import ccxt from 'ccxt';
 import axios from 'axios';
 
-console.log('running...')
+var exchange_url = "https://apitest.fine.exchange"
 
-console.log(ccxt.exchanges)
+var obj: any = {
+  urls:
+  {
+    api:
+    {
+      rest:
+        exchange_url
+    }
+  }
+}
+const _ccxt: any = new ccxt.hollaex(obj)
+console.log(_ccxt.urls.api.rest)
+
 const worker = new Worker('tasks', async job => {
   var res: any;
   res = await axios.get(job.data.url)
