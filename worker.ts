@@ -6,17 +6,19 @@ const worker = new Worker('tasks', async job => {
   var res: any;
   res = await axios.get(job.data.url)
   return res.data
+  // console.log(job.data)
 }, {
-  concurrency: 100,
+  concurrency: 10000,
   connection: {
     host: "127.0.0.1",
     port: 6379
   }
 })
 
-worker.on('resumed', () => {
-  console.log('active!')
-})
+var i = 0;
+// worker.on('resumed', () => {
+//   console.log('active!')
+// })
 
 worker.on('failed', (job, err) => {
   console.log(`${job.id} has failed with ${err.message}`)
@@ -26,4 +28,6 @@ worker.on('failed', (job, err) => {
 
 worker.on('completed', job => {
   console.log(`${job.id} has completed`)
+  i++
+  console.log(i)
 })

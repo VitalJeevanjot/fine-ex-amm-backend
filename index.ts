@@ -34,7 +34,7 @@ async function addJobs () {
   //   },
   // );
 
-  for (let index = 0; index < 10; index++) {
+  for (let index = 0; index < 100; index++) {
     await queue.add(
       'fetch',
       { url: 'https://www.boredapi.com/api/activity' },
@@ -42,10 +42,10 @@ async function addJobs () {
         repeat: {
           every: 10000,
           limit: 3
-        }
+        },
+        jobId: index.toString()
       }
     );
-
   }
   // const repeatableJobs = await queue.getRepeatableJobs();
   // console.log(repeatableJobs)
@@ -61,10 +61,12 @@ async function addJobs () {
   // }
 }
 addJobs()
-
+var i = 0
 queueEvents.on('completed', (data: any) => {
   console.log(`${data.jobId} has completed and returned`);
   console.log(data.returnvalue)
+  i++
+  console.log(i)
   var current = new Date();
   console.log(current)
 });
