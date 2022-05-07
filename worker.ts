@@ -1,17 +1,14 @@
 require('dotenv').config({ path: __dirname + '/.env' })
 import { setRequiredVariable } from './helpers';
 
-import { Worker } from 'bullmq';
+import { jobIdForGroup, Worker } from 'bullmq';
 import ccxt from 'ccxt';
 import axios from 'axios';
 
 
 
 async function main () {
-  // console.log('up!')
-  // // console.log(await exchange.fetchOrderBook('XHT/USDT', 5))
-  // // console.log(await exchange.has)
-
+  console.log('up!')
   // var obj: any = {
   //   urls:
   //   {
@@ -22,8 +19,12 @@ async function main () {
   //     }
   //   }
   // }
-
   // const exchange: any = new ccxt.hollaex(obj)
+  // // console.log(await exchange.fetchOrderBook('XHT/USDT', 5))
+  // console.log(await exchange.has)
+
+
+
   // // for better make 2 workers with 2 loggins, One for 'buying' and one for 'selling'
   // exchange.apiKey = setRequiredVariable('APIKEY')
   // exchange.secret = setRequiredVariable('APISECRET')
@@ -52,6 +53,7 @@ async function main () {
     exchange.apiKey = setRequiredVariable('APIKEY')
     exchange.secret = setRequiredVariable('APISECRET')
 
+
     let get_side = job.data.side
     let get_symbol = job.data.symbol.split('/') // base/quote currency
     let get_orderbook = await exchange.fetchOrderBook(job.data.symbol, 5)
@@ -61,15 +63,46 @@ async function main () {
     var get_balance = await exchange.fetchBalance()
     // (for my exchange) the percentage of amount used is base currency, to buy/sell quote
     let calculated_amount = (get_balance[get_symbol[0]]['free'] / 100) * job.data.price
-
-    let orderId = await exchange.createOrder(
-      job.data.symbol,
-      job.data.type,
-      get_side,
-      calculated_amount,
-      calculate_price_spread
-    )
-    return orderId
+    if (job.data.order_id === '') {
+      let orderId = await exchange.createOrder(
+        job.data.symbol,
+        job.data.type,
+        get_side,
+        calculated_amount,
+        calculate_price_spread
+      )
+      console.log("----new order----")
+      console.log(orderId)
+      return {
+        order_id: orderId.id,
+        exchange_url: job.data.exchange_url,
+        symbol: job.data.symbol,
+        type: job.data.type,
+        side: job.data.side,
+        amount: job.data.amount,
+        price: job.data.price
+      }
+    } else {
+      let editOrder = await exchange.editOrder(
+        job.data.order_id,
+        job.data.symbol,
+        job.data.type,
+        get_side,
+        calculated_amount,
+        calculate_price_spread
+      )
+      console.log("----edit order----")
+      console.log(editOrder)
+      return {
+        order_id: editOrder.id,
+        exchange_url: job.data.exchange_url,
+        symbol: job.data.symbol,
+        type: job.data.type,
+        side: job.data.side,
+        amount: job.data.amount,
+        price: job.data.price
+      }
+    }
   }, {
     concurrency: 10000,
     connection: {

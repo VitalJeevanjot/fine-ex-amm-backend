@@ -39,6 +39,7 @@ async function addJobs () {
   await queue.add(
     'createOrder',
     {
+      order_id: '',
       exchange_url: "https://apitest.fine.exchange",
       symbol: 'XHT/USDT',
       type: 'limit',
