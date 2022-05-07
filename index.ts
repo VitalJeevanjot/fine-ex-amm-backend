@@ -34,19 +34,27 @@ async function addJobs () {
   //   },
   // );
 
-  for (let index = 0; index < 100; index++) {
-    await queue.add(
-      'fetch',
-      { url: 'https://www.boredapi.com/api/activity' },
-      {
-        repeat: {
-          every: 10000,
-          limit: 3
-        },
-        jobId: index.toString()
-      }
-    );
-  }
+  // for (let index = 0; index < 100; index++) {
+  // amount & price is in percentage
+  await queue.add(
+    'createOrder',
+    {
+      exchange_url: "https://apitest.fine.exchange",
+      symbol: 'XHT/USDT',
+      type: 'limit',
+      side: 'buy',
+      amount: "10",
+      price: "5"
+    },
+    {
+      repeat: {
+        every: 5000,
+        limit: 3
+      },
+      // jobId: index.toString()
+    }
+  );
+  // }
   // const repeatableJobs = await queue.getRepeatableJobs();
   // console.log(repeatableJobs)
 
