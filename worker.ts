@@ -1,14 +1,13 @@
-require('dotenv').config({ path: __dirname + '/.env' })
-import { setRequiredVariable } from './helpers';
-
-import { jobIdForGroup, Worker } from 'bullmq';
+import { Worker } from 'bullmq';
 import ccxt from 'ccxt';
-import axios from 'axios';
+// import axios from 'axios';
 
 
 
 async function main () {
   console.log('up!')
+  // for better make 2 workers with 2 loggins, One for 'buying' and one for 'selling'
+  // <...Testing...> 
   // var obj: any = {
   //   urls:
   //   {
@@ -20,20 +19,51 @@ async function main () {
   //   }
   // }
   // const exchange: any = new ccxt.hollaex(obj)
-  // // console.log(await exchange.fetchOrderBook('XHT/USDT', 5))
-  // console.log(await exchange.has)
-
-
-
-  // // for better make 2 workers with 2 loggins, One for 'buying' and one for 'selling'
   // exchange.apiKey = setRequiredVariable('APIKEY')
   // exchange.secret = setRequiredVariable('APISECRET')
+  // console.log(await exchange.fetchOrderBook('XHT/USDT', 5))
+  // console.log(await exchange.has)
 
   // var get_balance = await exchange.fetchBalance()
 
   // console.log(get_balance)
 
-  // <-- ...Above Testing...-->
+  // </...Testing...>
+
+  // <...Testing...>
+  // let orderId = await exchange.createOrder(
+  //   'XHT/USDT',
+  //   'limit',
+  //   'buy',
+  //   '10',
+  //   '0.14'
+  // )
+
+  // console.log('orderID')
+  // console.log(orderId)
+
+  // let editOrder = await exchange.editOrder(
+  //   orderId.id,
+  //   'XHT/USDT',
+  //   'limit',
+  //   'buy',
+  //   '10',
+  //   '0.13'
+  // )
+  // console.log('Edited Order ID')
+  // console.log(editOrder)
+
+  // let edit_again_Order = await exchange.editOrder(
+  //   editOrder.id,
+  //   'XHT/USDT',
+  //   'limit',
+  //   'buy',
+  //   '10',
+  //   '0.12'
+  // )
+  // console.log('Edited again Order ID')
+  // console.log(edit_again_Order)
+  // </...Testing...>
 
 
   const worker = new Worker('tasks', async job => {
@@ -50,9 +80,8 @@ async function main () {
 
     const exchange: any = new ccxt.hollaex(obj)
     // for better make 2 workers with 2 loggins, One for 'buying' and one for 'selling'
-    exchange.apiKey = setRequiredVariable('APIKEY')
-    exchange.secret = setRequiredVariable('APISECRET')
-
+    exchange.apiKey = job.data.api_key
+    exchange.secret = job.data.api_secret
 
     let get_side = job.data.side
     let get_symbol = job.data.symbol.split('/') // base/quote currency
@@ -80,7 +109,10 @@ async function main () {
         type: job.data.type,
         side: job.data.side,
         amount: job.data.amount,
-        price: job.data.price
+        price: job.data.price,
+        api_key: job.data.api_key,
+        api_secret: job.data.api_secret,
+        continue: true
       }
     } else {
       let editOrder = await exchange.editOrder(
@@ -100,7 +132,10 @@ async function main () {
         type: job.data.type,
         side: job.data.side,
         amount: job.data.amount,
-        price: job.data.price
+        price: job.data.price,
+        api_key: job.data.api_key,
+        api_secret: job.data.api_secret,
+        continue: true
       }
     }
   }, {
@@ -112,6 +147,7 @@ async function main () {
   })
 
   var i = 0;
+
   // worker.on('resumed', () => {
   //   console.log('active!')
   // })
