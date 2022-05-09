@@ -26,7 +26,7 @@ const queueEvents = new QueueEvents('tasks', {
 
 
 
-async function addJobs () {
+async function addJobs (returned_job_data: any) {
   // await queue.add(
   //   'submarine',
   //   { color: 'yellow' },
@@ -39,24 +39,26 @@ async function addJobs () {
 
   // for (let index = 0; index < 100; index++) {
   // amount & price is in percentage
-  await queue.add(
-    'createOrder',
-    {
-      order_id: '',
-      exchange_url: "https://apitest.fine.exchange",
-      symbol: 'XHT/USDT',
-      type: 'limit',
-      side: 'buy',
-      amount: "10",
-      price: "5",
-      api_key: setRequiredVariable('APIKEY'),
-      api_secret: setRequiredVariable('APISECRET')
-    },
-    {
-      delay: 5000
-      // jobId: index.toString()
-    }
-  );
+  if (returned_job_data === '') {
+    await queue.add(
+      'createOrder',
+      {
+        order_id: '',
+        exchange_url: "https://apitest.fine.exchange",
+        symbol: 'XHT/USDT',
+        type: 'limit',
+        side: 'buy',
+        amount: "10",
+        price: "5",
+        api_key: setRequiredVariable('APIKEY'),
+        api_secret: setRequiredVariable('APISECRET')
+      },
+      {
+        delay: 5000
+        // jobId: index.toString()
+      }
+    );
+  }
   // }
   // const repeatableJobs = await queue.getRepeatableJobs();
   // console.log(repeatableJobs)
@@ -71,7 +73,9 @@ async function addJobs () {
   //   })
   // }
 }
-addJobs()
+
+addJobs('')
+
 var i = 0
 queueEvents.on('completed', (data: any) => {
   console.log(`${data.jobId} has completed and returned`);
@@ -82,7 +86,7 @@ queueEvents.on('completed', (data: any) => {
   console.log(current)
 
   if (data.returnvalue.continue == true) {
-    addJobs()
+    addJobs(data.returnvalue)
   } else {
     // log job discontinued and specify reason (by user or by system (intentionally or error))
   }

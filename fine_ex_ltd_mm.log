@@ -1,0 +1,26 @@
+[2022-05-09T03:00:12.163Z] INFO - Running at 3000!
+[2022-05-09T03:03:30.310Z] INFO - Running at 3000!
+[2022-05-09T03:04:29.950Z] INFO - Running at 3000!
+[2022-05-09T03:06:31.415Z] INFO - Running at 3000!
+[2022-05-09T03:08:35.140Z] INFO - my_services.
+[2022-05-09T03:09:10.276Z] INFO - my_services.
+[2022-05-09T03:09:28.035Z] INFO - my_services.
+[2022-05-09T03:10:06.936Z] INFO - Running at 3000!
+[2022-05-09T03:10:11.699Z] INFO - my_services.
+[2022-05-09T03:10:58.431Z] INFO - my_services.
+[2022-05-09T03:11:55.210Z] INFO - my_services.
+[2022-05-09T03:12:04.803Z] INFO - Running at 3000!
+[2022-05-09T03:12:16.366Z] INFO - my_services.
+[2022-05-09T03:12:36.566Z] INFO - Running at 3000!
+[2022-05-09T03:12:47.148Z] INFO - [object Object]
+[2022-05-09T03:13:04.124Z] INFO - Running at 3000!
+[2022-05-09T03:13:11.446Z] INFO - my_services.
+[2022-05-09T03:13:28.426Z] INFO - Running at 3000!
+[2022-05-09T03:13:34.650Z] INFO - {"body1":1,"body2":2}
+[2022-05-09T03:14:00.593Z] INFO - Running at 3000!
+[2022-05-09T03:14:08.056Z] INFO - my_services: {"body1":1,"body2":2}
+[2022-05-09T03:15:02.116Z] INFO - Running at 3000!
+[2022-05-09T03:16:27.057Z] INFO - create_new: {"body1":1,"body2":2}
+[2022-05-09T03:20:29.115Z] INFO - Running at 3000!
+[2022-05-09T03:20:31.794Z] INFO - create_new: {"body1":1,"body2":2}
+[2022-05-09T03:20:31.794Z] ERROR - Unexpected Error.Error: oh ho post
