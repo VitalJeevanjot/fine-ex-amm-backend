@@ -1,8 +1,9 @@
 import { Queue, QueueScheduler } from 'bullmq';
 import { QueueEvents } from 'bullmq';
+import { userInfo } from 'os';
 
 require('dotenv').config({ path: __dirname + '/.env' })
-import { setRequiredVariable } from './helpers';
+import { setRequiredVariable } from '../../helpers';
 
 
 const queueScheduler = new QueueScheduler('tasks', {
@@ -39,7 +40,7 @@ async function addJobs (returned_job_data: any) {
 
   // for (let index = 0; index < 100; index++) {
   // amount & price is in percentage
-  if (returned_job_data === '') {
+  if (returned_job_data === '') { // 'if' it will be removed when stating to pass dynamic inputs to below fields 
     await queue.add(
       'createOrder',
       {
@@ -48,10 +49,15 @@ async function addJobs (returned_job_data: any) {
         symbol: 'XHT/USDT',
         type: 'limit',
         side: 'buy',
-        amount: "10",
-        price: "5",
+        amount: "10", // per cent from wallet
+        price: "5", // per cent of spread
         api_key: setRequiredVariable('APIKEY'),
-        api_secret: setRequiredVariable('APISECRET')
+        api_secret: setRequiredVariable('APISECRET'),
+        timeElapsed: 0, // total time elapsed since the task running
+        totalVolume: 0, // total volume made so far by this task in this pair (in base asset)
+        volumeInHour: 0, // volume per hour made by this task (average, instead of every hour), task continuation requirement based on this
+        volumeInEachHour: 0, // exact volume per hour made by this task
+        fine_exchange_user_id: 0 // unique id (email probably) of this fine exchange user (from fine exchange mainnet)
       },
       {
         delay: 5000
