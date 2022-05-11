@@ -57,7 +57,8 @@ async function addJobs (returned_job_data: any) {
         totalVolume: 0, // total volume made so far by this task in this pair (in base asset)
         volumeInHour: 0, // volume per hour made by this task (average, instead of every hour), task continuation requirement based on this
         volumeInEachHour: 0, // exact volume per hour made by this task
-        fine_exchange_user_id: 0 // unique id (email probably) of this fine exchange user (from fine exchange mainnet)
+        fine_exchange_user_id: 0, // unique id (email probably) of this fine exchange user (from fine exchange mainnet)
+        task_id: 0 // to be send by front-end (unique if of the task)
       },
       {
         delay: 5000
