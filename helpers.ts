@@ -1,6 +1,9 @@
 const fs: any = require('fs')
 const path: any = require('path')
 
+import axios from 'axios';
+const crypto = require('crypto')
+
 const setRequiredVariable = (variableName: string) => {
   if (process.env[variableName]) {
     return process.env[variableName];
@@ -8,7 +11,33 @@ const setRequiredVariable = (variableName: string) => {
   throw new Error(`ENV-variable missing: ${variableName}`);
 }
 
+const getUserDetails = (api_key: string, api_secret: string, api_url: string) => {
+  // ${METHOD}${PATH}${api-expires}
+  const expireTime = Date.now() + 5000
+  const text = `GET/v2/${expireTime}`
+  const key = api_secret
+
+  const sig = crypto.createHmac('sha256', key)
+    .update(text)
+    .digest('hex')
+
+  axios({
+    method: 'GET',
+    url: api_url + '/v2/user',
+    headers: {
+      'api-key': api_key,
+      'api-signature': sig,
+      'api-expires': expireTime
+    }
+  }).then((res) => {
+    console.log(res.data)
+  }).catch((err) => {
+    console.log(err.message)
+  })
+}
+
 
 export {
-  setRequiredVariable
+  setRequiredVariable,
+  getUserDetails
 }

@@ -3,7 +3,7 @@ import { QueueEvents } from 'bullmq';
 import { userInfo } from 'os';
 
 require('dotenv').config({ path: __dirname + '/../../.env' })
-import { setRequiredVariable } from '../../helpers';
+import { setRequiredVariable, getUserDetails } from '../../helpers';
 
 
 const queueScheduler = new QueueScheduler('tasks', {

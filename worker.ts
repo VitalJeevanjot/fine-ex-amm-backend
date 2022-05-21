@@ -1,11 +1,11 @@
 import { Worker } from 'bullmq';
 import ccxt from 'ccxt';
 
-const crypto = require('crypto')
+
 
 require('dotenv').config({ path: __dirname + '/.env' })
 import { setRequiredVariable } from './helpers';
-import axios from 'axios';
+
 
 
 
@@ -28,27 +28,6 @@ async function main () {
   exchange.secret = setRequiredVariable('APISECRET')
   console.log(await exchange.fetchStatus())
 
-  // ${METHOD}${PATH}${api-expires}
-  const text = 'GET/v2/user1653148552'
-  const key = '14414ca6fda7b727b3246d3dde7830556a3b63fe7bdbb71dab'
-
-  console.log(crypto.createHmac('sha256', key)
-    .update(text)
-    .digest('hex'))
-
-  axios({
-    method: 'GET',
-    url: 'https://apitest.fine.exchange/v2/user',
-    headers: {
-      'api-key': 'c2b3cae2bfa7253cd5bf4ebb7152e534e874ba99',
-      'api-signature': 'a5b72639754401ce1c2df438f79501d5d07af255a23b1370ce9b00566e697558',
-      'api-expires': '1653148552'
-    }
-  }).then((res) => {
-    console.log(res.data)
-  }).catch((err) => {
-    console.log(err.message)
-  })
 
   // console.log(await exchange.fetchAccounts())
   // console.log(await exchange.fetchOrderBook('XHT/USDT', 5))
