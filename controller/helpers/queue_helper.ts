@@ -2,7 +2,7 @@ import { Queue, QueueScheduler } from 'bullmq';
 import { QueueEvents } from 'bullmq';
 import { userInfo } from 'os';
 
-require('dotenv').config({ path: __dirname + '/.env' })
+require('dotenv').config({ path: __dirname + '/../../.env' })
 import { setRequiredVariable } from '../../helpers';
 
 
@@ -59,11 +59,12 @@ async function addJobs (returned_job_data: any) {
         volumeInEachHour: 0, // exact volume per hour made by this task
         fine_exchange_user_id: 0, // unique id (email probably) of this fine exchange user (from fine exchange mainnet)
         task_id: 0 // to be send by front-end (unique if of the task)
-      },
-      {
-        delay: 5000
-        // jobId: index.toString()
       }
+      // ,
+      // {
+      //   delay: 5000
+      //   // jobId: index.toString()
+      // }
     );
   }
   // }
