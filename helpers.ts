@@ -30,9 +30,9 @@ const getUserDetails = (api_key: string, api_secret: string, api_url: string) =>
       'api-expires': expireTime
     }
   }).then((res) => {
-    console.log(res.data)
+    return res.data
   }).catch((err) => {
-    console.log(err.message)
+    return err.message
   })
 }
 

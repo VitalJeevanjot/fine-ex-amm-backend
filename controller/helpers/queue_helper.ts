@@ -1,6 +1,5 @@
 import { Queue, QueueScheduler } from 'bullmq';
 import { QueueEvents } from 'bullmq';
-import { userInfo } from 'os';
 
 require('dotenv').config({ path: __dirname + '/../../.env' })
 import { setRequiredVariable, getUserDetails } from '../../helpers';
@@ -27,7 +26,7 @@ const queueEvents = new QueueEvents('tasks', {
 
 
 
-async function addJobs (returned_job_data: any) {
+async function addJobs (job_data: any) {
   // await queue.add(
   //   'submarine',
   //   { color: 'yellow' },
@@ -37,37 +36,48 @@ async function addJobs (returned_job_data: any) {
   //     },
   //   },
   // );
-
-  // for (let index = 0; index < 100; index++) {
-  // amount & price is in percentage
-  if (returned_job_data === '') { // 'if' it will be removed when stating to pass dynamic inputs to below fields 
-    await queue.add(
-      'createOrder',
-      {
-        order_id: '',
-        exchange_url: "https://apitest.fine.exchange",
-        symbol: 'XHT/USDT',
-        type: 'limit',
-        side: 'buy',
-        amount: "10", // per cent from wallet
-        price: "5", // per cent of spread
-        api_key: setRequiredVariable('APIKEY'),
-        api_secret: setRequiredVariable('APISECRET'),
-        timeElapsed: 0, // total time elapsed since the task running
-        totalVolume: 0, // total volume made so far by this task in this pair (in base asset)
-        volumeInHour: 0, // volume per hour made by this task (average, instead of every hour), task continuation requirement based on this
-        volumeInEachHour: 0, // exact volume per hour made by this task
-        fine_exchange_user_id: 0, // unique id (email probably) of this fine exchange user (from fine exchange mainnet)
-        task_id: 0 // to be send by front-end (unique if of the task)
-      }
-      // ,
-      // {
-      //   delay: 5000
-      //   // jobId: index.toString()
-      // }
-    );
+  var get_task_keys = Object.keys(job_data)
+  var get_required_key = ''
+  for (let index = 0; index < get_task_keys.length; index++) {
+    const element = get_task_keys[index];
+    if (get_task_keys.includes('task_data_api_plain_pretext_')) {
+      get_required_key = get_task_keys[index]
+    }
   }
-  // }
+
+  let user_unique_id = get_required_key.replace('task_data_api_plain_pretext_', '')
+  let get_user_details = getUserDetails(
+    job_data.api_key,
+    job_data.api_secret,
+    job_data.api_url
+  )
+  // amount & price is in percentage
+  await queue.add(
+    'createOrder',
+    {
+      order_id: '',
+      exchange_url: "https://apitest.fine.exchange",
+      symbol: 'XHT/USDT',
+      type: 'limit',
+      side: 'buy',
+      amount: "10", // per cent from wallet
+      price: "5", // per cent of spread
+      api_key: setRequiredVariable('APIKEY'),
+      api_secret: setRequiredVariable('APISECRET'),
+      timeElapsed: 0, // total time elapsed since the task running
+      totalVolume: 0, // total volume made so far by this task in this pair (in base asset)
+      volumeInHour: 0, // volume per hour made by this task (average, instead of every hour), task continuation requirement based on this
+      volumeInEachHour: 0, // exact volume per hour made by this task
+      fine_exchange_user_id: 0, // unique id (email probably) of this fine exchange user (from fine exchange mainnet)
+      task_id: 0 // to be send by front-end (unique if of the task)
+    }
+    ,
+    {
+      delay: 5000
+      // jobId: index.toString()
+    }
+  );
+
   // const repeatableJobs = await queue.getRepeatableJobs();
   // console.log(repeatableJobs)
 
@@ -99,6 +109,10 @@ queueEvents.on('completed', (data: any) => {
     // log job discontinued and specify reason (by user or by system (intentionally or error))
   }
 });
+
+export {
+  addJobs
+}
 
 
 
