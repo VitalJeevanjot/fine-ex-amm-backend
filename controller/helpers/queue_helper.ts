@@ -24,7 +24,13 @@ const queueEvents = new QueueEvents('tasks', {
   }
 })
 
-
+// async function testDetails () {
+//   console.log(setRequiredVariable('APIKEY'))
+//   console.log(setRequiredVariable('APISECRET'))
+//   let data = await getUserDetails(setRequiredVariable('APIKEY')!, setRequiredVariable('APISECRET')!, 'https://apitest.fine.exchange')
+//   console.log(data)
+// }
+// testDetails()
 
 async function addJobs (job_data: any) {
   // await queue.add(
@@ -36,21 +42,21 @@ async function addJobs (job_data: any) {
   //     },
   //   },
   // );
-  var get_task_keys = Object.keys(job_data)
-  var get_required_key = ''
-  for (let index = 0; index < get_task_keys.length; index++) {
-    const element = get_task_keys[index];
-    if (get_task_keys.includes('task_data_api_plain_pretext_')) {
-      get_required_key = get_task_keys[index]
-    }
-  }
+  // var get_task_keys = Object.keys(job_data)
+  // var get_required_key = ''
+  // for (let index = 0; index < get_task_keys.length; index++) {
+  //   const element = get_task_keys[index];
+  //   if (get_task_keys.includes('task_data_api_plain_pretext_')) {
+  //     get_required_key = get_task_keys[index]
+  //   }
+  // }
 
-  let user_unique_id = get_required_key.replace('task_data_api_plain_pretext_', '')
-  let get_user_details = getUserDetails(
-    job_data.api_key,
-    job_data.api_secret,
-    job_data.api_url
-  )
+  // let user_unique_id = get_required_key.replace('task_data_api_plain_pretext_', '')
+  // let get_user_details = getUserDetails(
+  //   job_data.api_key,
+  //   job_data.api_secret,
+  //   job_data.api_url
+  // )
   // amount & price is in percentage
   await queue.add(
     'createOrder',
@@ -92,7 +98,7 @@ async function addJobs (job_data: any) {
   // }
 }
 
-addJobs('')
+// addJobs('')
 
 var i = 0
 queueEvents.on('completed', (data: any) => {

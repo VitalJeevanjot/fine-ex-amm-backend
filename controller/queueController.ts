@@ -1,7 +1,11 @@
 import { Request, Response } from 'express';
+import { getUserDetails } from '../helpers';
 import logger from '../logger';
 import { addJobs } from './helpers/queue_helper';
+// import { QuickDB } from 'quick.db';
+// const db = QuickDB({ filePath: 'db/main.sqlite' });
 
+// var user_task_control = new db.table('user_task_control')
 
 const my_services = async (req: Request, res: Response) => {
   try {
@@ -16,11 +20,22 @@ const my_services = async (req: Request, res: Response) => {
   }
 
 }
+
 const create_new = async (req: Request, res: Response) => {
   try {
     // let add_jobs = addJobs(req.body)
     logger.info("create_new: " + JSON.stringify(req.body))
+    var user_details = await getUserDetails(
+      req.body.api_key,
+      req.body.api_secret,
+      req.body.api_url
+    )
+    // user_task_control.set(`${user_details.email}.id`, user_details.id)
 
+    // console.log(user_details)
+    // console.log('DB all')
+    // console.log(user_task_control.all())
+    // console.log(user_task_control.get(user_details.email))
     // <Result>
     // console.log(req.body.body)
     // {
@@ -58,6 +73,8 @@ const create_new = async (req: Request, res: Response) => {
     })
   }
 }
+
+
 export {
   my_services,
   create_new
