@@ -10,7 +10,7 @@ const logger = winston.createLogger({
     winston.format.timestamp(),
     winston.format.printf(info => `[${info.timestamp}] ${info.level.toUpperCase()} - ${info.message}`)
   ),
-  transports: [new winston.transports.File({ filename: 'fine_ex_ltd_mm.log' })]
+  transports: [new winston.transports.File({ filename: 'fine_ex_ltd_mmm.log' })]
 });
 
 export default logger;

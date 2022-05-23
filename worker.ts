@@ -1,9 +1,6 @@
 import { Worker } from 'bullmq';
 import ccxt from 'ccxt';
 
-
-
-require('dotenv').config({ path: __dirname + '/.env' })
 import { setRequiredVariable } from './helpers';
 
 

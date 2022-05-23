@@ -18,3 +18,4 @@ app.get('/my_services', queueController.my_services)
 app.post('/create_new', queueController.create_new)
 
 app.listen(port, () => logger.info(`Running at ${port}!`))
+
