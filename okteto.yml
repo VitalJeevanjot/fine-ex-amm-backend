@@ -1,4 +1,4 @@
-name: dev-backend-fine-ex-mmm
+name: dev-db-backend-fine-ex-mmm
 image: okteto/node:14
 command: bash
 sync:
