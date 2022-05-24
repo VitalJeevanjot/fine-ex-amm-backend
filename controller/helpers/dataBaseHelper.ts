@@ -28,6 +28,12 @@ async function defineModal() {
     },
     totalVolumeByTasks: {
       type: DataTypes.BIGINT
+    },
+    lastUserTask: {
+      type: DataTypes.TEXT
+    },
+    lastUserTaskCreatedDate: {
+      type: DataTypes.DATE
     }
   });
 
@@ -41,6 +47,34 @@ async function defineModal() {
       allowNull: false
     },
     taskStatus: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    taskPair: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    taskInterval: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    taskAmount: {
+      type: DataTypes.BIGINT,
+      allowNull: false
+    },
+    taskSpread: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    taskType: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    taskExchange: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    taskExchangeAPIURL: {
       type: DataTypes.TEXT,
       allowNull: false
     },
@@ -79,14 +113,6 @@ async function defineModal() {
       allowNull: false
     },
     taskStatusChangedTime: {
-      type: DataTypes.TEXT,
-      allowNull: false
-    },
-    taskExchange: {
-      type: DataTypes.TEXT,
-      allowNull: false
-    },
-    taskExchangeAPIURL: {
       type: DataTypes.TEXT,
       allowNull: false
     }
