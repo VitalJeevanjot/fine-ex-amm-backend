@@ -8,7 +8,7 @@ const logger = winston.createLogger({
     winston.format.errors({ stack: true }),
     winston.format.simple(),
     winston.format.timestamp(),
-    winston.format.printf(info => `[${info.timestamp}] ${info.level.toUpperCase()} - ${info.message}`)
+    winston.format.printf(info => `<${Date.now()}> [${info.timestamp}] ${info.level.toUpperCase()} - ${info.message}`)
   ),
   transports: [new winston.transports.File({ filename: 'fine_ex_ltd_mmm.log' })]
 });
