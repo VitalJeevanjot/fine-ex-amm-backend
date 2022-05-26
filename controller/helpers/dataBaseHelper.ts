@@ -42,6 +42,10 @@ async function defineModal() {
       type: DataTypes.TEXT,
       allowNull: false
     },
+    taskRunningServer: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
     taskOwnerEmail: {
       type: DataTypes.TEXT,
       allowNull: false
