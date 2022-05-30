@@ -95,8 +95,17 @@ async function defineModal() {
     },
     taskGeneratedVolume1HourAverage: {
       type: DataTypes.BIGINT
-    }
+    },
+    taskUsedWithAPIKey: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    taskUsedWithAPISecret: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
   });
+  // TODO: here set both taskUsedWithAPIKey & taskUsedWithAPISecret encrypted with a key from okteto servers
 
 
   const TaskStatus = sequelize.define('TaskStatus', {
