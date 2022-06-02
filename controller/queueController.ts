@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import axios from 'axios'
-import { setRequiredVariable, getUserDetails } from '../helpers';
+import { setRequiredVariable, getUserDetails, encryptData } from '../helpers';
 import logger from '../logger';
 import { addJobs } from './helpers/queue_helper';
 // import { QuickDB } from 'quick.db';
@@ -8,10 +8,10 @@ import { addJobs } from './helpers/queue_helper';
 
 // var user_task_control = new db.table('user_task_control')
 
-const my_services = async (req: Request, res: Response) => {
+const get_services = async (req: Request, res: Response) => {
   try {
     console.log('services')
-    logger.info("my_services: " + JSON.stringify(req.body))
+    logger.info("my_services: " + encryptData(JSON.stringify(req.body)))
     return res.status(200).send('data412523523412')
   } catch (e: any) {
     logger.error('Unexpected Error: ' + e.toString())
@@ -22,10 +22,10 @@ const my_services = async (req: Request, res: Response) => {
 
 }
 
-const create_new = async (req: Request, res: Response) => {
+const save_created_new = async (req: Request, res: Response) => {
   try {
     // let add_jobs = addJobs(req.body)
-    logger.info("create_new: " + JSON.stringify(req.body))
+    logger.info("create_new: " + encryptData(JSON.stringify(req.body)))
     var user_details = await getUserDetails(
       req.body.body.api_key,
       req.body.body.api_secret,
@@ -80,8 +80,8 @@ const create_new = async (req: Request, res: Response) => {
 
 
 export {
-  my_services,
-  create_new
+  get_services,
+  save_created_new
 }
 
 
