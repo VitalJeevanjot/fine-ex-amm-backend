@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 import { setRequiredVariable } from '../../helpers';
 
-const sequelize = new Sequelize(`postgres://${setRequiredVariable('USER_NAME')}:${setRequiredVariable('USER_PASSWORD')}@${setRequiredVariable('DB_URL')}:${setRequiredVariable('DB_PORT')}/${setRequiredVariable('DB_NAME')}`)
+const sequelize = new Sequelize(`postgres://${setRequiredVariable('USER_NAME')}:${setRequiredVariable('USER_PASSWORD')}@${setRequiredVariable('DB_URL')}:${setRequiredVariable('DB_PORT')}/${setRequiredVariable('DB_NAME_TASKS')}`)
 
 
 async function test() {
