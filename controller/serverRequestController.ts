@@ -10,26 +10,13 @@ import { getUsersTasks } from './helpers/query_helpers';
 
 const get_services = async (req: Request, res: Response) => {
   try {
-    try {
-      if(req.body.body.login_api_apiKey_S.toString().length != 15) {
-        throw "API key for logs not provided"
-      }
-    } catch(e) {
-      logger.info("encrypt_login: " + "API key for logs not provided or not correct length: " + req.body.body.login_api_apiKey_S + " :" + encryptData(JSON.stringify(req.body)))
-      return res.status(500).json({
-        'message': 'Object error logger key not correct!'
-      })
-    }
-    // ------
-
-
 
     console.log('services')
-    logger.info("my_services: " + encryptData(JSON.stringify(req.body)))
-    var 
-    return res.status(200).send('data412523523412')
+    logger.info("my_services: " + req.body.body.login_api_apiKey_S.toString() +": " + encryptData(JSON.stringify(req.body)))
+    var tasks = getUsersTasks()
+    return res.status(200).send(tasks)
   } catch (e: any) {
-    logger.error('Unexpected Error: ' + e.toString())
+    logger.error('Unexpected Error: ' + req.body.body.login_api_apiKey_S.toString() +": " + e.toString())
     return res.status(500).json({
       'message': 'Unexpected error'
     })
@@ -39,21 +26,9 @@ const get_services = async (req: Request, res: Response) => {
 
 const save_created_new = async (req: Request, res: Response) => {
   try {
-    try {
-      if(req.body.body.login_api_apiKey_S.toString().length != 15) {
-        throw "API key for logs not provided"
-      }
-    } catch(e) {
-      logger.info("encrypt_login: " + "API key for logs not provided or not correct length: " + req.body.body.login_api_apiKey_S + " :" + encryptData(JSON.stringify(req.body)))
-      return res.status(500).json({
-        'message': 'Object error logger key not correct!'
-      })
-    }
-    // ------
 
-    
     // let add_jobs = addJobs(req.body)
-    logger.info("create_new: " + encryptData(JSON.stringify(req.body)))
+    logger.info("create_new: " + req.body.body.login_api_apiKey_S.toString() +": " + encryptData(JSON.stringify(req.body)))
     var user_details = await getUserDetails(
       req.body.body.api_key,
       req.body.body.api_secret,
@@ -99,7 +74,7 @@ const save_created_new = async (req: Request, res: Response) => {
     return res.status(200).send('data23423235123')
   } catch (e: any) {
     console.log(e.message)
-    logger.error('Unexpected Error: ' + e.toString())
+    logger.error('Unexpected Error: ' + req.body.body.login_api_apiKey_S.toString() +": " + e.toString())
     return res.status(500).json({
       'message': 'Unexpected error'
     })

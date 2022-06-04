@@ -4,10 +4,9 @@ import { User_Tasks, Tasks } from '../cli/databaseModal';
 
 
 export async function getUsersTasks() {
-  var user_detail = getUserDetails()
-  const {count, rows} = await Tasks.findAndCountAll({
+  const {count, rows} = await Tasks.findAll({
     where: {
-
+      userEmail: ''
     }
   })
 }
