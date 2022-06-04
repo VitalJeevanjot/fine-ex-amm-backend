@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import axios from 'axios'
 import { setRequiredVariable, getUserDetails, encryptData } from '../helpers';
 import logger from '../logger';
-import { addJobs } from './helpers/queue_helper';
+import { getUsersTasks } from './helpers/query_helpers';
 // import { QuickDB } from 'quick.db';
 // const db = QuickDB({ filePath: 'db/main.sqlite' });
 
@@ -10,8 +10,23 @@ import { addJobs } from './helpers/queue_helper';
 
 const get_services = async (req: Request, res: Response) => {
   try {
+    try {
+      if(req.body.body.login_api_apiKey_S.toString().length != 15) {
+        throw "API key for logs not provided"
+      }
+    } catch(e) {
+      logger.info("encrypt_login: " + "API key for logs not provided or not correct length: " + req.body.body.login_api_apiKey_S + " :" + encryptData(JSON.stringify(req.body)))
+      return res.status(500).json({
+        'message': 'Object error logger key not correct!'
+      })
+    }
+    // ------
+
+
+
     console.log('services')
     logger.info("my_services: " + encryptData(JSON.stringify(req.body)))
+    var 
     return res.status(200).send('data412523523412')
   } catch (e: any) {
     logger.error('Unexpected Error: ' + e.toString())
@@ -24,6 +39,19 @@ const get_services = async (req: Request, res: Response) => {
 
 const save_created_new = async (req: Request, res: Response) => {
   try {
+    try {
+      if(req.body.body.login_api_apiKey_S.toString().length != 15) {
+        throw "API key for logs not provided"
+      }
+    } catch(e) {
+      logger.info("encrypt_login: " + "API key for logs not provided or not correct length: " + req.body.body.login_api_apiKey_S + " :" + encryptData(JSON.stringify(req.body)))
+      return res.status(500).json({
+        'message': 'Object error logger key not correct!'
+      })
+    }
+    // ------
+
+    
     // let add_jobs = addJobs(req.body)
     logger.info("create_new: " + encryptData(JSON.stringify(req.body)))
     var user_details = await getUserDetails(
