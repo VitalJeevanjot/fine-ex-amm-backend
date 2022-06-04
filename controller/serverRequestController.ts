@@ -16,7 +16,7 @@ const get_services = async (req: Request, res: Response) => {
     var tasks = getUsersTasks()
     return res.status(200).send(tasks)
   } catch (e: any) {
-    logger.error('Unexpected Error: ' + req.body.body.login_api_apiKey_S.toString() +": " + e.toString())
+    logger.error('Unexpected Error: ' + req.body.body.login_api_apiKey_S.toString() +": " + e.stack.toString())
     return res.status(500).json({
       'message': 'Unexpected error'
     })
@@ -74,7 +74,7 @@ const save_created_new = async (req: Request, res: Response) => {
     return res.status(200).send('data23423235123')
   } catch (e: any) {
     console.log(e.message)
-    logger.error('Unexpected Error: ' + req.body.body.login_api_apiKey_S.toString() +": " + e.toString())
+    logger.error('Unexpected Error: ' + req.body.body.login_api_apiKey_S.toString() +": " + e.stack.toString())
     return res.status(500).json({
       'message': 'Unexpected error'
     })
