@@ -10,13 +10,13 @@ import { getUsersTasks } from './helpers/query_helpers';
 
 const get_services = async (req: Request, res: Response) => {
   try {
-
-    console.log('services')
-    logger.info("my_services: " + req.body.body.login_api_apiKey_S.toString() +": " + encryptData(JSON.stringify(req.body)))
-    var tasks = getUsersTasks()
+    logger.info("get_services: " + req.body.logger_Key +": " + encryptData(JSON.stringify(req.body)))
+    var tasks = getUsersTasks(req.body.email)
+    console.log('...listing tasks...')
+    console.log(tasks)
     return res.status(200).send(tasks)
   } catch (e: any) {
-    logger.error('Unexpected Error: ' + req.body.body.login_api_apiKey_S.toString() +": " + e.stack.toString())
+    logger.error('Unexpected Error: ' + req.body.logger_Key +": " + e.stack.toString())
     return res.status(500).json({
       'message': 'Unexpected error'
     })

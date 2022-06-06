@@ -1,12 +1,14 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize, DataTypes, Op } = require('sequelize');
 import { setRequiredVariable, getUserDetails } from '../../helpers';
 import { User_Tasks, Tasks } from '../cli/databaseModal';
 
 
-export async function getUsersTasks() {
-  const {count, rows} = await Tasks.findAll({
+export async function getUsersTasks(email: string) {
+  return await Tasks.findAll({
     where: {
-      userEmail: ''
+      userEmail: email,
+      [Op.or]: [{taskStatus: 'running'}, {taskStatus: 'stopped'}]
     }
   })
+
 }
