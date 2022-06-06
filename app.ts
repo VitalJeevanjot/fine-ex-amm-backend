@@ -14,8 +14,8 @@ app.use(function (req, res, next) {
 });
 
 // app.get('/', queueController.say_hello)
-app.get('/get_services', queueController.get_services)
+app.post('/get_services', queueController.get_services)
 app.post('/save_created_new', queueController.save_created_new)
 
-app.listen(port, () => logger.info(`Running at ${port}!`))
+app.listen(port, () => logger.info(`databaseHandler: Running at ${port}!`))
 

@@ -6,7 +6,7 @@ import { User_Tasks, Tasks } from '../cli/databaseModal';
 export async function getUsersTasks(email: string) {
   return await Tasks.findAll({
     where: {
-      userEmail: email,
+      taskOwnerEmail: email,
       [Op.or]: [{taskStatus: 'running'}, {taskStatus: 'stopped'}]
     }
   })

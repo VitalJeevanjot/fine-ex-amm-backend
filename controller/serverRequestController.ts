@@ -10,13 +10,18 @@ import { getUsersTasks } from './helpers/query_helpers';
 
 const get_services = async (req: Request, res: Response) => {
   try {
-    logger.info("get_services: " + req.body.logger_Key +": " + encryptData(JSON.stringify(req.body)))
-    var tasks = getUsersTasks(req.body.email)
+    console.log(req.body)
+    logger.info("databaseHandler: get_services: " + req.body.logger_Key +": " + encryptData(JSON.stringify(req.body)))
+    var tasks: any = await getUsersTasks(req.body.email)
     console.log('...listing tasks...')
     console.log(tasks)
-    return res.status(200).send(tasks)
+    // ...listing tasks...
+    // []
+    // above 2 console log lines and their results
+    logger.info("databaseHandler: get_services: user_tasks" + req.body.logger_Key +": " + encryptData(tasks.toString()))
+    return res.status(200).send({tasks: tasks, logger_key: req.body.logger_Key})
   } catch (e: any) {
-    logger.error('Unexpected Error: ' + req.body.logger_Key +": " + e.stack.toString())
+    logger.error('databaseHandler: Unexpected Error: ' + req.body.logger_Key +": " + e.message + ": " +e.stack.toString())
     return res.status(500).json({
       'message': 'Unexpected error'
     })
@@ -28,7 +33,7 @@ const save_created_new = async (req: Request, res: Response) => {
   try {
 
     // let add_jobs = addJobs(req.body)
-    logger.info("create_new: " + req.body.body.login_api_apiKey_S.toString() +": " + encryptData(JSON.stringify(req.body)))
+    logger.info("databaseHandler: create_new: " + req.body.body.login_api_apiKey_S.toString() +": " + encryptData(JSON.stringify(req.body)))
     var user_details = await getUserDetails(
       req.body.body.api_key,
       req.body.body.api_secret,
@@ -74,7 +79,7 @@ const save_created_new = async (req: Request, res: Response) => {
     return res.status(200).send('data23423235123')
   } catch (e: any) {
     console.log(e.message)
-    logger.error('Unexpected Error: ' + req.body.body.login_api_apiKey_S.toString() +": " + e.stack.toString())
+    logger.error('databaseHandler: Unexpected Error: ' + req.body.body.login_api_apiKey_S.toString() +": " + e.stack.toString())
     return res.status(500).json({
       'message': 'Unexpected error'
     })

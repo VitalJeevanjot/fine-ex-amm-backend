@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node dist/app.js",
     "dev": "nodemon app.ts",
+    "setup_db": "ts-node controller/cli/databaseModal.ts",
     "build": "tsc -p ."
   },
   "keywords": [],

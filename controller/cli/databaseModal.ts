@@ -108,7 +108,7 @@ export const Tasks = sequelize.define('Tasks', {
 // TODO: here set both taskUsedWithAPIKey & taskUsedWithAPISecret encrypted with a key from okteto servers
 
 
-export const TaskStatus = sequelize.define('TaskStatus', {
+export const TaskStatus = sequelize.define('Tasks_position', {
   UUID: {
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4
