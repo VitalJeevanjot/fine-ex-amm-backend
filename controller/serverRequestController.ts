@@ -10,6 +10,8 @@ import { getUsersTasks } from './helpers/query_helpers';
 
 const get_services = async (req: Request, res: Response) => {
   try {
+    logger.info('\n\n')
+    
     console.log(req.body)
     logger.info("databaseHandler: get_services: " + req.body.logger_Key +": " + encryptData(JSON.stringify(req.body)))
     var tasks: any = await getUsersTasks(req.body.email)
