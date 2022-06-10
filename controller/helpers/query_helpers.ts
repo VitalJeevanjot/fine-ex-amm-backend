@@ -13,7 +13,23 @@ export async function getUsersTasks(email: string) {
 }
 export async function saveNewTask(task: any) {
   await Tasks.create({
-    taskID: task.body.task_id
+    taskID: task.body.task_id,
+    taskRunningServer: task.body.taskRunningServer,
+    taskOwnerEmail: task.body.fine_exchange_user_id,
+    taskStatus:  task.body.continue ? 'running' : 'stopped',
+    taskPair:  task.body.symbol,
+    taskInterval: task.body.seconds_interval,
+    taskAmount: task.body.seconds_interval,
+    taskSpread: task.body.price,
+    taskType: task.body.type,
+    taskExchange: task.body.exchange_url,
+    taskExchangeAPIURL: task.body.exchange_url,
+    taskTotalGeneratedVolume: task.body.totalVolume,
+    taskCreatedTime: task.body.timeStarted,
+    taskLastStartTime: task.body.timeStarted,
+    taskGeneratedVolume1HourAverage: task.body.volumeInHour,
+    taskUsedWithAPIKey: task.body.api_key,
+    taskUsedWithAPISecret: task.body.api_secret,
   })
     // TASK VALUE: task.body
     //   order_id: '',
@@ -33,5 +49,5 @@ export async function saveNewTask(task: any) {
     //   task_id: '515d586a-8947-4eff-9f56-079395edfe1a',
     //   login_api_apiKey_S: 'c2b3cae2bfa7253',
     //   seconds_interval: '10',
-    //   email: 'vitalvictor1123@gmail.com'
+    //   fine_exchange_user_id: 'vitalvictor1123@gmail.com'
 }

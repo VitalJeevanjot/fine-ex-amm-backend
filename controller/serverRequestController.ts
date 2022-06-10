@@ -43,11 +43,11 @@ const save_created_new = async (req: Request, res: Response) => {
 
     // let add_jobs = addJobs(req.body)
     logger.info("databaseHandler: create_new: " + req.body.body.login_api_apiKey_S.toString() +": " + encryptData(JSON.stringify(req.body)))
-    var user_details = await getUserDetails(
-      req.body.body.api_key,
-      req.body.body.api_secret,
-      req.body.body.api_url
-    )
+    // var user_details = await getUserDetails(
+    //   req.body.body.api_key,
+    //   req.body.body.api_secret,
+    //   req.body.body.api_url
+    // )
 
     // console.log(user_details)
     // user_task_control.set(`${user_details.email}.id`, user_details.id)
