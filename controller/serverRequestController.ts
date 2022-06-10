@@ -2,11 +2,15 @@ import { Request, Response } from 'express';
 import axios from 'axios'
 import { setRequiredVariable, getUserDetails, encryptData } from '../helpers';
 import logger from '../logger';
-import { getUsersTasks } from './helpers/query_helpers';
+import { getUsersTasks, saveNewTask } from './helpers/query_helpers';
 // import { QuickDB } from 'quick.db';
 // const db = QuickDB({ filePath: 'db/main.sqlite' });
 
 // var user_task_control = new db.table('user_task_control')
+
+const hello = async (req: Request, res: Response) => {
+  return res.status(200).send("Hello")
+}
 
 const get_services = async (req: Request, res: Response) => {
   try {
@@ -97,7 +101,8 @@ const save_created_new = async (req: Request, res: Response) => {
 
 export {
   get_services,
-  save_created_new
+  save_created_new,
+  hello
 }
 
 
