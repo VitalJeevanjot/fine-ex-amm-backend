@@ -19,8 +19,8 @@ const get_services = async (req: Request, res: Response) => {
     console.log(req.body)
     logger.info("databaseHandler: get_services: " + req.body.logger_Key +": " + encryptData(JSON.stringify(req.body)))
     var tasks: any = await getUsersTasks(req.body.email)
-    console.log('...listing tasks...')
-    console.log(tasks)
+    // console.log('...listing tasks...')
+    // console.log(tasks)
     // ...listing tasks...
     // []
     // above 2 console log lines and their results
@@ -42,6 +42,9 @@ const save_created_new = async (req: Request, res: Response) => {
   try {
 
     // let add_jobs = addJobs(req.body)
+    // console.log("req.body>")
+    // console.log(req.body)
+    // console.log("<req.body")
     logger.info("databaseHandler: create_new: " + req.body.body.login_api_apiKey_S.toString() +": " + encryptData(JSON.stringify(req.body)))
     return saveNewTask(req.body, res)
   } catch (e: any) {

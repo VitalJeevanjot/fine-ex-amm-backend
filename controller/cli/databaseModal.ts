@@ -43,7 +43,7 @@ export const Tasks = sequelize.define('Tasks', {
     allowNull: false
   },
   taskRunningServer: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.TEXT,
     allowNull: false
   },
   taskOwnerEmail: {
@@ -74,7 +74,7 @@ export const Tasks = sequelize.define('Tasks', {
     type: DataTypes.STRING,
     allowNull: false
   },
-  taskExchange: {
+  taskExchangeLoginURL: {
     type: DataTypes.TEXT,
     allowNull: false
   },
@@ -103,6 +103,9 @@ export const Tasks = sequelize.define('Tasks', {
   taskUsedWithAPISecret: {
     type: DataTypes.TEXT,
     allowNull: false
+  },
+  taskRecentOrderId: {
+    type: DataTypes.TEXT
   },
 });
 // TODO: here set both taskUsedWithAPIKey & taskUsedWithAPISecret encrypted with a key from okteto servers
