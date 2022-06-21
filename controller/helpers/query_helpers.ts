@@ -25,7 +25,7 @@ export async function saveNewTask(task: any, res: any) {
       taskStatus:  task.body.continue ? 'running' : 'stopped',
       taskPair:  task.body.symbol.value,
       taskInterval: task.body.seconds_interval,
-      taskAmount: task.body.seconds_interval,
+      taskAmount: task.body.amount,
       taskSpread: task.body.spread_percent,
       taskType: task.body.type,
       taskExchangeLoginURL: task.body.login_api_exchangeURL,
