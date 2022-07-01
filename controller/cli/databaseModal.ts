@@ -70,7 +70,11 @@ export const Tasks = sequelize.define('Tasks', {
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  taskType: {
+  taskType: { // limit
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  taskSide: { // New -> buy/sell
     type: DataTypes.STRING,
     allowNull: false
   },
@@ -79,6 +83,10 @@ export const Tasks = sequelize.define('Tasks', {
     allowNull: false
   },
   taskExchangeAPIURL: {
+    type: DataTypes.TEXT,
+    allowNull: false
+  },
+  taskExchangeAPIName: { // New, Name of api in front-end
     type: DataTypes.TEXT,
     allowNull: false
   },
@@ -108,7 +116,7 @@ export const Tasks = sequelize.define('Tasks', {
     type: DataTypes.TEXT
   },
 });
-// TODO: here set both taskUsedWithAPIKey & taskUsedWithAPISecret encrypted with a key from okteto servers
+// DONE: here set both taskUsedWithAPIKey & taskUsedWithAPISecret encrypted with a key from okteto servers
 
 
 export const TaskStatus = sequelize.define('Tasks_position', {
@@ -136,9 +144,8 @@ export const TaskStatus = sequelize.define('Tasks_position', {
 
 
 // Should run one time only...
+// syncModal()
 export async function syncModal() {
   await sequelize.sync();
   // await sequelize.sync({force: true});
 }
-
-// syncModal()
