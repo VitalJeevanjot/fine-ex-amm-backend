@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import axios from 'axios'
 import { setRequiredVariable, getUserDetails, encryptData } from '../helpers';
 import logger from '../logger';
-import { getUsersTasks, saveNewTask } from './helpers/query_helpers';
+import { getUsersTasks, saveNewTask, deleteTask } from './helpers/query_helpers';
 // import { QuickDB } from 'quick.db';
 // const db = QuickDB({ filePath: 'db/main.sqlite' });
 
@@ -38,6 +38,7 @@ const get_services = async (req: Request, res: Response) => {
 
 }
 
+
 const save_created_new = async (req: Request, res: Response) => {
   try {
 
@@ -45,16 +46,33 @@ const save_created_new = async (req: Request, res: Response) => {
     // console.log("req.body>")
     // console.log(req.body)
     // console.log("<req.body")
-    logger.info("databaseHandler: create_new: " + req.body.body.login_api_apiKey_S.toString() +": " + encryptData(JSON.stringify(req.body)))
+    logger.info("databaseHandler: save_task: " + req.body.body.login_api_apiKey_S.toString() +": " + encryptData(JSON.stringify(req.body)))
     return saveNewTask(req.body, res)
   } catch (e: any) {
     console.log(e)
-    logger.info('databaseHandler: Unexpected Error: ' + req.body.body.login_api_apiKey_S.toString() +": " + e.stack.toString())
+    logger.info('databaseHandler: save_task: Unexpected Error: ' + req.body.body.login_api_apiKey_S.toString() +": " + e.stack.toString())
     if(res.headersSent) {
       return
     }
     return res.status(500).json({
-      'message': 'Unexpected error'
+      'message': 'S_t_: Unexpected error'
+    })
+  }
+}
+
+const delete_service = async (req: Request, res: Response) => {
+  try {
+    logger.info("databaseHandler: delete_service: " + req.body.login_api_apiKey_S.toString() +": " + encryptData(JSON.stringify(req.body)))
+    await deleteTask(req.body, res)
+    return res.status(200).send({message: "Task deleted" + req.body.id})
+  } catch (e: any) {
+    console.log(e)
+    logger.info('databaseHandler: delete_service: Unexpected Error: ' + req.body.body.login_api_apiKey_S.toString() +": " + e.stack.toString())
+    if(res.headersSent) {
+      return
+    }
+    return res.status(500).json({
+      'message': 'd_t_: Unexpected error'
     })
   }
 }
@@ -63,6 +81,7 @@ const save_created_new = async (req: Request, res: Response) => {
 export {
   get_services,
   save_created_new,
+  delete_service,
   hello
 }
 

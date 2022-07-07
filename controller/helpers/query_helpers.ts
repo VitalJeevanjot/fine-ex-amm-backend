@@ -2,6 +2,7 @@ const { Sequelize, DataTypes, Op } = require('sequelize');
 import { encryptData } from '../../helpers';
 import { Tasks } from '../cli/databaseModal';
 import logger from '../../logger';
+import { cancelTask } from '../../exchange';
 
 
 export async function getUsersTasks(email: string) {
@@ -26,10 +27,11 @@ export async function getUsersTasks(email: string) {
     }
   })
 }
+
 export async function saveNewTask(task: any, res: any) {
-  console.log("task>")
-  console.log(task)
-  console.log("<task")
+  // console.log("task>")
+  // console.log(task)
+  // console.log("<task")
   var new_task
   try {
     new_task = await Tasks.create({
@@ -85,4 +87,10 @@ export async function saveNewTask(task: any, res: any) {
     // },
     // login_email: 'vitalvictor1123@gmail.com',
     // api_email: 'vitalvictor1123@gmail.com'
+}
+
+
+export async function deleteTask(task: any, res: any) {
+  var get_task = await Tasks.findOne({where: {taskID: task.id}})
+  console.log(get_task)
 }
