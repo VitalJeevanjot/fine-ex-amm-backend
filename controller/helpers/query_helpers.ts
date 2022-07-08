@@ -90,7 +90,22 @@ export async function saveNewTask(task: any, res: any) {
 }
 
 
-export async function deleteTask(task: any, res: any) {
-  var get_task = await Tasks.findOne({where: {taskID: task.id}})
-  console.log(get_task)
+export async function deleteTask(task: any, res: any, status: any) {
+  await Tasks.update({
+    taskStatus: status,
+  },
+    {
+      where: {
+        taskID: task.id
+      }
+    })
+}
+
+export async function getTaskById(id: any) {
+  return await Tasks.findOne(
+    {
+      where: {
+        taskID: id
+      }
+    })
 }
