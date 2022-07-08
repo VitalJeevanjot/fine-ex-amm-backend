@@ -68,7 +68,7 @@ const get_task_by_id = async (req: Request, res: Response) => {
     // console.log("req.body>")
     // console.log(req.body)
     // console.log("<req.body")
-    logger.info("databaseHandler: get_task_by_id: " + req.body.body.login_api_apiKey_S.toString() +": " + encryptData(JSON.stringify(req.body)))
+    logger.info("databaseHandler: get_task_by_id: " + req.body.login_api_apiKey_S +": " + encryptData(JSON.stringify(req.body)))
     res.status(200).send({task: await getTaskById(req.body.id)})
   } catch (e: any) {
     console.log(e)
