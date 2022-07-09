@@ -90,9 +90,20 @@ export async function saveNewTask(task: any, res: any) {
 }
 
 
-export async function deleteTask(task: any, res: any, status: any) {
+export async function deleteTask(task: any, status: any) {
   await Tasks.update({
     taskStatus: status,
+  },
+    {
+      where: {
+        taskID: task.id
+      }
+    })
+}
+
+export async function udpateOrderId(task: any, order_id: any) {
+  await Tasks.update({
+    taskRecentOrderId: order_id,
   },
     {
       where: {
