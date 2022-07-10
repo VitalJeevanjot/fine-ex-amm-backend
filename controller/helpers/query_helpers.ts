@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes, Op } = require('sequelize');
-import { encryptData } from '../../helpers';
+import { decryptData, encryptData } from '../../helpers';
 import { Tasks } from '../cli/databaseModal';
 import logger from '../../logger';
 import { cancelTask } from '../../exchange';
@@ -91,14 +91,41 @@ export async function saveNewTask(task: any, res: any) {
 
 
 export async function deleteTask(task: any, status: any) {
-  await Tasks.update({
-    taskStatus: status,
-  },
-    {
-      where: {
-        taskID: task.id
-      }
-    })
+  try {
+    logger.info('databaseHandler: query_helper: deleteTask: status_update: ' + task.login_api_apiKey_S + ": task:" + encryptData(JSON.stringify(task)))
+    await Tasks.update({
+        taskStatus: status,
+      },
+      {
+        where: {
+          taskID: task.id
+        }
+      })  
+  } catch(e: any) {
+    logger.info('databaseHandler: query_helper: deleteTask: status_update: Error: ' + task.login_api_apiKey_S + ": error_stack: " + e.stack + ": e_toString: " + e.toString())
+    return "status_update_error"
+  }
+  let task_from_id : any
+  try {
+    logger.info('databaseHandler: query_helper: deleteTask: after_status_update: fetch_task_by_id: ' + task.login_api_apiKey_S + ": task:" + encryptData(JSON.stringify(task)))
+    task_from_id = await getTaskById(task.id)
+  } catch(e: any) {
+    logger.info('databaseHandler: query_helper: deleteTask: after_status_update: fetch_task_by_id: Error: ' + task.login_api_apiKey_S + ": error_stack: " + e.stack + ": e_toString: " + e.toString())
+    return "get_task_error"
+  }
+  let api_key : any = decryptData(task_from_id.taskUsedWithAPIKey)
+  let api_secret : any = decryptData(task_from_id.taskUsedWithAPISecret)
+  let api_url : any = task_from_id.taskExchangeAPIURL
+  let recent_order_id : any = task_from_id.taskRecentOrderId
+
+  try {
+    logger.info('databaseHandler: query_helper: deleteTask: cancel_order: ' + task.login_api_apiKey_S)
+    console.log(await cancelTask(api_key, api_secret, api_url, recent_order_id))
+  } catch(e: any) {
+    logger.info('databaseHandler: query_helper: deleteTask: cancel_order: Error: ' + task.login_api_apiKey_S + ": error_stack: " + e.stack + ": e_toString: " + e.toString())
+    return "cancel_order_error"
+  }
+
 }
 
 export async function udpateOrderId(task: any, order_id: any) {

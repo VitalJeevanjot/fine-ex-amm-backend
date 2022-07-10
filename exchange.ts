@@ -5,8 +5,12 @@ import { setRequiredVariable } from './helpers';
 
 
 
-export async function cancelTask (api_key: string, api_secret: string, order_id: string) {
-  console.log('up!')
+export async function cancelTask (
+  api_key: string, 
+  api_secret: string, 
+  api_url: string, 
+  order_id: string
+  ) {
   // for better make 2 workers with 2 loggins, One for 'buying' and one for 'selling'
   // <...Testing...> 
   var obj: any = {
@@ -15,15 +19,16 @@ export async function cancelTask (api_key: string, api_secret: string, order_id:
       api:
       {
         rest:
-          "https://api.fine.exchange"
+          api_url
       }
     }
   }
   const exchange: any = new ccxt.hollaex(obj)
-  exchange.apiKey = setRequiredVariable('APIKEY')
-  exchange.secret = setRequiredVariable('APISECRET')
-  console.log(await exchange.fetchStatus())
+  exchange.apiKey = api_key
+  exchange.secret = api_secret
+  // console.log(await exchange.fetchStatus())
 
+  return await exchange.cancelOrder(order_id)
 
   // console.log(await exchange.fetchAccounts())
   // console.log(await exchange.fetchOrderBook('XHT/USDT', 5))
