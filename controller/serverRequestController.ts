@@ -87,11 +87,11 @@ const delete_service = async (req: Request, res: Response) => {
     logger.info("databaseHandler: delete_service: " + req.body.login_api_apiKey_S.toString() +": " + encryptData(JSON.stringify(req.body)))
     let _res = await deleteTask(req.body, req.body.status)
     if(_res == "status_update_error") {
-      return res.status(200).send({message: "<span class='text-red'>Error on Deleting: </span>" + req.body.id, logger_key: req.body.login_api_apiKey_S.toString()})
+      return res.status(200).send({message: "<span class='text-red'>Error at Deleting: </span>" + req.body.id, logger_key: req.body.login_api_apiKey_S.toString()})
     } else if(_res == "get_task_error") {
-      return res.status(200).send({message: "<span class='text-red'>Task Deleted! But Error! on Order cancellation from exchange: </span>" + req.body.id, logger_key: req.body.login_api_apiKey_S.toString()})
+      return res.status(200).send({message: "<span class='text-red'>Error before Deleting! </span>" + req.body.id, logger_key: req.body.login_api_apiKey_S.toString()})
     } else if(_res == "cancel_order_error") {
-      return res.status(200).send({message: "<span class='text-red'>Task Deleted! But Error! while Order cancellation from exchange: </span>" + req.body.id, logger_key: req.body.login_api_apiKey_S.toString()})
+      return res.status(200).send({message: "<span class='text-red'>Task Deleted! But error while Order cancellation from exchange: </span>" + req.body.id, logger_key: req.body.login_api_apiKey_S.toString()})
     }
     if(!res.headersSent) {
       return res.status(200).send({message: "<span class='text-red'>Deleted: </span>" + req.body.id, logger_key: req.body.login_api_apiKey_S.toString()})

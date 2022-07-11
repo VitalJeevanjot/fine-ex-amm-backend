@@ -22,7 +22,7 @@ const encryptData = (variableName: string) => {
 }
 
 const decryptData = (variableName: string) => {
-  return cryptr.encrypt(variableName)
+  return cryptr.decrypt(variableName)
 }
 
 
