@@ -42,7 +42,7 @@ export async function saveNewTask(task: any, res: any) {
       taskPair:  task.body.symbol.value,
       taskInterval: task.body.seconds_interval,
       taskAmount: task.body.amount,
-      taskSpread: task.body.spread_percent,
+      taskSpread: task.body.spread_percentage,
       taskType: task.body.type,
       taskSide: task.body.side, // New
       taskExchangeLoginURL: task.body.login_api_exchangeURL,
@@ -81,7 +81,7 @@ export async function saveNewTask(task: any, res: any) {
     //   symbol: { label: 'XHT/USDT', value: 'XHT/USDT' },
     //   type: 'limit',
     //   seconds_interval: '10',
-    //   spread_percent: '2',
+    //   spread_percentage: '2',
     //   amount: '20',
     //   task_uuid: '05ee8187-828b-43cd-9bc4-4c9da46cf72b'
     // },
