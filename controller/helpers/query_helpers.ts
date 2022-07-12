@@ -120,8 +120,10 @@ export async function deleteTask(task: any, status: any) {
     logger.info('databaseHandler: query_helper: deleteTask: status_update: Error: ' + task.login_api_apiKey_S + ": error_stack: " + e.stack + ": e_toString: " + e.toString())
     return "status_update_error"
   }
-  
+
   if(old_task_status == 'running') {
+    // handling if already stopped task wants to be deleted then this wont run saving an error
+    // will throw error if an order is deleted by the user from exchange that was made by fine exchange AOM (Automatic order manager / this app)
     try {
       logger.info('databaseHandler: query_helper: deleteTask: cancel_order: ' + task.login_api_apiKey_S)
       console.log(await cancelTask(api_key, api_secret, api_url, recent_order_id))
